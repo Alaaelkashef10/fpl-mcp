@@ -26,19 +26,19 @@ def _manager_id(manager_id: str | None = None) -> str:
     return value
 
 
-@mcp.tool
+@mcp.tool()
 def get_fpl_status() -> Any:
     """Return the current FPL bootstrap/status data."""
     return _get("bootstrap-static/")
 
 
-@mcp.tool
+@mcp.tool()
 def get_players() -> Any:
     """Return all FPL players and current game metadata."""
     return _get("bootstrap-static/")
 
 
-@mcp.tool
+@mcp.tool()
 def get_fixtures(gameweek: int | None = None) -> Any:
     """Return FPL fixtures, optionally filtered by gameweek."""
     fixtures = _get("fixtures/")
@@ -47,37 +47,37 @@ def get_fixtures(gameweek: int | None = None) -> Any:
     return [fixture for fixture in fixtures if fixture.get("event") == gameweek]
 
 
-@mcp.tool
+@mcp.tool()
 def get_manager(manager_id: str | None = None) -> Any:
     """Return a manager's FPL entry summary."""
     return _get(f"entry/{_manager_id(manager_id)}/")
 
 
-@mcp.tool
+@mcp.tool()
 def get_manager_history(manager_id: str | None = None) -> Any:
     """Return a manager's season history and chips."""
     return _get(f"entry/{_manager_id(manager_id)}/history/")
 
 
-@mcp.tool
+@mcp.tool()
 def get_manager_picks(gameweek: int, manager_id: str | None = None) -> Any:
     """Return a manager's squad picks for a gameweek."""
     return _get(f"entry/{_manager_id(manager_id)}/event/{gameweek}/picks/")
 
 
-@mcp.tool
+@mcp.tool()
 def get_manager_transfers(manager_id: str | None = None) -> Any:
     """Return a manager's transfer history."""
     return _get(f"entry/{_manager_id(manager_id)}/transfers/")
 
 
-@mcp.tool
+@mcp.tool()
 def get_player_summary(player_id: int) -> Any:
     """Return a player's detailed FPL history and fixtures."""
     return _get(f"element-summary/{player_id}/")
 
 
-@mcp.tool
+@mcp.tool()
 def get_live_gameweek(gameweek: int) -> Any:
     """Return live FPL data for a gameweek."""
     return _get(f"event/{gameweek}/live/")
