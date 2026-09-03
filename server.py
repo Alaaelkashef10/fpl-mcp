@@ -46,11 +46,22 @@ def get_players() -> Any:
 
 @mcp.tool()
 def get_fixtures(gameweek: int | None = None) -> Any:
-    """Return FPL fixtures, optionally filtered by gameweek."""
-    fixtures = _get("fixtures/")
+    """Return FPL fixtures, optionally filtered by gameweek.
+
+    When a gameweek is supplied, the FPL API is queried directly with
+    its event filter so the tool returns the complete fixture list for
+    that gameweek instead of relying on client-side filtering of the
+    unfiltered fixtures response.
+    """
     if gameweek is None:
-        return fixtures
-    return [fixture for fixture in fixtures if fixture.get("event") == gameweek]
+        fixtures = _get("fixtures/")
+    else:
+        fixtures = _get(f"fixtures/?event={gameweek}")
+
+    if not isinstance(fixtures, list):
+        raise TypeError("FPL fixtures endpoint returned a non-list response")
+
+    return fixtures
 
 
 @mcp.tool()
