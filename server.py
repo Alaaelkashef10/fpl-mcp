@@ -9,7 +9,13 @@ DEFAULT_MANAGER_ID = os.getenv("FPL_DEFAULT_MANAGER_ID", "")
 HOST = os.getenv("HOST", "0.0.0.0")
 PORT = int(os.getenv("PORT", "8000"))
 
-mcp = FastMCP("FPL MCP", stateless_http=True, json_response=True)
+mcp = FastMCP(
+    "FPL MCP",
+    stateless_http=True,
+    json_response=True,
+    host=HOST,
+    port=PORT,
+)
 
 
 def _get(path: str) -> Any:
@@ -84,8 +90,4 @@ def get_live_gameweek(gameweek: int) -> Any:
 
 
 if __name__ == "__main__":
-    mcp.run(
-        transport="streamable-http",
-        host=HOST,
-        port=PORT,
-    )
+    mcp.run(transport="streamable-http")
